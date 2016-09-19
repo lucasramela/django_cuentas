@@ -1,0 +1,10 @@
+<ul>
+{% for c in cuentas %}	
+<!--	<li>{{ c.nombre }}</li> 
+	<li>{{ c.nombre }} - {{ c.email }}</li>
+	<li>      -->
+	<li>{{ c.nombre }} {% if c.email %} - {% endif %} <b>{{ c.email }}</b></li>
+
+{% endfor %}
+</ul> 
+El total es {{ total }}
