@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %} Mi template {% endblock %}</title>
+</head>
+<body>
+	<div class="row">
+		<div class="col-sm-4" id="sidebar">
+			{% block sidebar %}
+			<ul>
+				<li><a href="/">Home</a></li>
+				<li><a href="/cuentas/">Cuentas</a></li>
+			</ul>
+			{% endblock %}
+		</div>
+		
+		<div class="col-sm-8" id="content">
+			{% block content %} {% endblock %}
+		</div>
+	</div>
+</body>
+</html>
