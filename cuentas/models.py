@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 
 # Create your models here.
 class Localidad(models.Model):
@@ -25,6 +26,15 @@ class Movimiento(models.Model):
 	def __str__(self):
 		return "{0} ({1})".format(self.importe, self.fecha)
 
+	@staticmethod
+	def get_with(query):
+		# hacemos la Q
+		q1 = Q(cuenta__nombre__icontains=query)
+		q2 = Q(comprobante__icontains=query)
+		#retornamos los Q
+		return Movimiento.objects.filter(q1 | q2)
+
+
 class PerfilEmpleado(models.Model):
 	fecha_ingreso = models.DateField()
 	sueldo = models.DecimalField(max_digits=20, decimal_places=2,default=20000)
@@ -37,3 +47,4 @@ class GerenteDeCuentas(models.Model):
 
 	def __str__(self):
 		return self.nombre
+
