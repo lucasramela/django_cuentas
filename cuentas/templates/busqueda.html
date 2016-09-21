@@ -5,7 +5,7 @@
 <form action="/busqueda/" method="post">
 	<!-- Etiqueta que sirve para identificar el formulario y mitigar ataques-->
 	{% csrf_token %}
-	{{ form }}
+	{{ form.as_p }}
 
 	<input type="submit" values="buscar">
 
