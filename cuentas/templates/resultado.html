@@ -3,10 +3,10 @@
 {% block title %} Resultado {% endblock %}
 
 {% block content %}
-<h2>Se buscó: {{query}}</h2>
+<h2>Se buscó: {{ query }}</h2>
 
 {% for movimiento in movimientos %}
-	<p>{{ moviemiento.cuenta }}  -  ${{ movimiento.importe }}</p>
+	<p>{{ movimiento.cuenta }}  -  ${{ movimiento.importe }}</p>
 {% endfor %}
 
 {% endblock %}

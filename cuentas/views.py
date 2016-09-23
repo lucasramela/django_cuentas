@@ -1,12 +1,19 @@
 import datetime
 from django.http import HttpResponse
 from django.http import Http404
+import datetime
+from django.http import HttpResponse
+from django.http import Http404
 from django.shortcuts import render
 from cuentas.models import Cuenta, Movimiento
 from cuentas.forms import SearchForm
 
 
 # Create your views here.
+def index(request):
+	return render(request, 'base.html', {})
+
+
 def fecha(request):
 	now = datetime.datetime.now()
 	html = "<html><body> Hoy es {0}.</body></html>".format(now)
@@ -27,14 +34,17 @@ def cuenta(request, id):
 def busqueda(request):
 	# preguntamos si se esta usando el metodo post
 	if request.method == 'POST':
+		# import ipdb; ipdb.set_trace()
 		# generamos la instancia de fomrs
 		form = SearchForm(request.POST)
 		# preguntamos si son validos los datos
 		if form.is_valid():
 			# aca instanciamos el cleaned_data que devolvio valid
 			query = form.cleaned_data['query']
+			limit = form.cleaned_data['limit']
+			fecha = form.cleaned_data['fecha']
 			# aplicamos un metodo personal para realizar la busqueda que queremos
-			movimientos = Movimiento.get_with(query)
+			movimientos = Movimiento.get_with(query, limit, fecha)
 			# retornamos los resultados
 			return render(request, 'resultado.html', {'query': query, 'movimientos': movimientos})
 	else:

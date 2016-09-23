@@ -27,13 +27,16 @@ class Movimiento(models.Model):
 		return "{0} ({1})".format(self.importe, self.fecha)
 
 	@staticmethod
-	def get_with(query):
+	def get_with(query, limit, fecha):
 		# hacemos la Q
 		q1 = Q(cuenta__nombre__icontains=query)
 		q2 = Q(comprobante__icontains=query)
+		queryset = Movimiento.objects.filter(q1 | q2) 
 		#retornamos los Q
-		return Movimiento.objects.filter(q1 | q2)
-
+		if (fecha):
+			return Movimiento.objects.filter(q1 | q2).filter(fecha__gte=fecha)[:limit]
+		else:
+			return Movimiento.objects.filter(q1 | q2)[:limit]
 
 class PerfilEmpleado(models.Model):
 	fecha_ingreso = models.DateField()

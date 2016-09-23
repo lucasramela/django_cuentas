@@ -18,6 +18,7 @@ from django.contrib import admin
 from cuentas import views
 
 urlpatterns = [
+	url(r'^$', views.index),
     url(r'^admin/', admin.site.urls),
     url(r'^fecha_hoy/$', views.fecha),
     url(r'^cuentas/', views.cuentas),
