@@ -8,5 +8,10 @@
 	<p>{{ cuenta.direccion }}</p>
 	<p>{{ cuenta.localidad }}</p>
 	<p>{{ cuenta.email }}</p>
+	<br>
+	<h2>Movimientos realizados por la cuenta</h2>
+	{% for movimiento in movimientos %}
+		<h3>{{ movimiento.fecha }} - {{ movimiento.importe }} - {{ movimiento.comprobante }}</h3>
+	{% endfor %}
 
 {% endblock %}

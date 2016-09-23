@@ -19,9 +19,10 @@ def cuentas(request):
 def cuenta(request, id):
 	try:
 		c = Cuenta.objects.get(pk=id)
+		m = Cuenta.objects.get(pk=id).movimiento_set.all()
 	except Cuenta.DoesNotExist:
 		raise Http404("No existe la cuenta seleccionada")
-	return render (request, 'cuenta2.html',{'cuenta' : c})
+	return render (request, 'cuenta2.html',{'cuenta' : c, 'movimientos': m})
 
 def busqueda(request):
 	# preguntamos si se esta usando el metodo post
