@@ -9,6 +9,7 @@ class SearchForm(forms.Form):
 	fecha = forms.DateTimeField(label='Desde cuando', required=False)
 
 class MovimientoForm(forms.ModelForm):
+
 	class Meta:
 		model = Movimiento
 		fields = ('cuenta', 'comprobante', 'importe')

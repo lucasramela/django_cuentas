@@ -57,8 +57,8 @@ def movimientos(request):
 		if form.is_valid():
 			movimiento = form.save(commit=False)
 			movimiento.save()
-			return render(request, 'movimientos.html', {'movimientos': Movimiento.objects.all()})
+			return render(request, 'movimientos.html', {'movimientos': Movimiento.ultimos()})
 	# si no es POST (es get)
 	else:
 		form = MovimientoForm()
-		return render(request, 'get_movimientos.html', {'form': form, 'movimientos': Movimiento.objects.all()})
+		return render(request, 'get_movimientos.html', {'form': form, 'movimientos': Movimiento.ultimos()})

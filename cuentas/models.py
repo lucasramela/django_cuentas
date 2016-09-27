@@ -38,6 +38,11 @@ class Movimiento(models.Model):
 		else:
 			return Movimiento.objects.filter(q1 | q2)[:limit]
 
+	@staticmethod
+	def ultimos():
+		return Movimiento.objects.order_by('-fecha')[:10]
+
+
 class PerfilEmpleado(models.Model):
 	fecha_ingreso = models.DateField()
 	sueldo = models.DecimalField(max_digits=20, decimal_places=2,default=20000)
