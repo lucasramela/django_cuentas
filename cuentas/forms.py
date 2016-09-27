@@ -1,5 +1,5 @@
 from django import forms
-#from cuentas.models import Movimento
+from cuentas.models import Movimiento
 
 
 class SearchForm(forms.Form):
@@ -8,7 +8,7 @@ class SearchForm(forms.Form):
 	limit = forms.IntegerField(label='Limite', min_value=1, required=False)
 	fecha = forms.DateTimeField(label='Desde cuando', required=False)
 
-# class MovimientoForm(forms.Form):
-# 	class Meta:
-# 		model = Movimento
-# 		field = ('cuenta', 'comprobante', 'importe')
+class MovimientoForm(forms.ModelForm):
+	class Meta:
+		model = Movimiento
+		fields = ('cuenta', 'comprobante', 'importe')

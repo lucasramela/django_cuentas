@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^cuentas/', views.cuentas),
     url(r'^cuenta/([0-9]+)/$',views.cuenta),
     url(r'^busqueda/$', views.busqueda),
+    url(r'^movimientos/$', views.movimientos),
 ]

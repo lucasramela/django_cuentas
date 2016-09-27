@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.http import Http404
 from django.shortcuts import render
 from cuentas.models import Cuenta, Movimiento
-from cuentas.forms import SearchForm
+from cuentas.forms import SearchForm, MovimientoForm
 
 
 # Create your views here.
@@ -16,7 +16,7 @@ def index(request):
 
 def fecha(request):
 	now = datetime.datetime.now()
-	html = "<html><body> Hoy es {0}.</body></html>".format(now)
+	html = "<html><body> Hoy es %s.</body></html>".format(now)
 	html = "<html><body> El año es {0}.</body></html>".format(now.year)
 	return HttpResponse(html)
 
@@ -51,3 +51,14 @@ def busqueda(request):
 		form = SearchForm()
 	return render(request, 'busqueda.html', {'form': form})
 
+def movimientos(request):
+	if request.method == 'POST':
+		form = MovimientoForm(request.POST)
+		if form.is_valid():
+			movimiento = form.save(commit=False)
+			movimiento.save()
+			return render(request, 'movimientos.html', {'movimientos': Movimiento.objects.all()})
+	# si no es POST (es get)
+	else:
+		form = MovimientoForm()
+		return render(request, 'get_movimientos.html', {'form': form, 'movimientos': Movimiento.objects.all()})

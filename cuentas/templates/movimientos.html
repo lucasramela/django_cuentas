@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %} Movimientos {% endblock %}
+
+{% block content %}
+
+<h2>Movimientos</h2>
+{% for movimiento in movimientos %}
+	<p>{{ movimiento.cuenta }} - {{ movimiento.importe }}</p>
+
+{% endfor %}
+
+{% endblock %}
