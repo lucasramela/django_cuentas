@@ -8,6 +8,10 @@ class Localidad(models.Model):
 	def __str__(self):
 		return self.nombre
 
+	@staticmethod
+	def ultimos():
+		return Localidad.objects.order_by('-id')[:15]
+
 class Cuenta(models.Model):
 	nombre = models.CharField(max_length=200)
 	direccion = models.CharField(max_length=500)

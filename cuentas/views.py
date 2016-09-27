@@ -5,8 +5,8 @@ import datetime
 from django.http import HttpResponse
 from django.http import Http404
 from django.shortcuts import render
-from cuentas.models import Cuenta, Movimiento
-from cuentas.forms import SearchForm, MovimientoForm
+from cuentas.models import Cuenta, Movimiento, Localidad, PerfilEmpleado
+from cuentas.forms import SearchForm, MovimientoForm, LocalidadForm
 
 
 # Create your views here.
@@ -62,3 +62,31 @@ def movimientos(request):
 	else:
 		form = MovimientoForm()
 		return render(request, 'get_movimientos.html', {'form': form, 'movimientos': Movimiento.ultimos()})
+
+def localidades(request):
+	# 2 - y esto es si doy a guardar
+	if request.method == 'POST':
+		form = LocalidadForm(request.POST)
+		if form.is_valid():
+
+			localidad = form.save(commit=False)
+			localidad.save()
+
+			return render(request, 'localidades.html', {'localidades': Localidad.ultimos()}) 
+	# 1 - esta es la vista
+	else:
+		form = LocalidadForm()
+		return render(request, 'get_localidades.html', {'form': form, 'localidades': Localidad.ultimos()})
+
+# def perfiles(request):
+# 	if request.method == 'POST':
+# 		form = PerfilForm(request)
+# 		if form.is_valid:
+
+# 			perfiles = form.save(commit=False)
+# 			perfiles.save()
+
+# 			return render(request, 'perfiles.html', {'form': PerfilEmpleado.objects.all()})
+# 	else:
+# 		form = PerfilForm()
+# 		return render(request, 'perfiles.html', {'form': PerfilEmpleado.objects.all()})

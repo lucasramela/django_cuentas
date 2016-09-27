@@ -1,5 +1,5 @@
 from django import forms
-from cuentas.models import Movimiento
+from cuentas.models import Movimiento, Localidad
 
 
 class SearchForm(forms.Form):
@@ -13,3 +13,10 @@ class MovimientoForm(forms.ModelForm):
 	class Meta:
 		model = Movimiento
 		fields = ('cuenta', 'comprobante', 'importe')
+
+class LocalidadForm(forms.ModelForm):
+	 class Meta:
+	 	model = Localidad
+	 	fields = ('nombre',)
+
+	 		

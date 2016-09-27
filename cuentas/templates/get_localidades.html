@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %} Localidades {% endblock %}
+
+{% block content %}
+<form action="/localidades/" method="POST">
+	
+	{% csrf_token %}
+	{{ form.as_p }}
+
+	<input type="submit" value="Guardar">
+
+</form>
+
+<h2>Localidades</h2>
+{% for localidad in localidades %}
+
+	<p>{{ localidad.nombre }}</p>
+
+{% endfor %} 
+
+{% endblock %}
+
