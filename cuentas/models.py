@@ -8,6 +8,7 @@ class Localidad(models.Model):
 	def __str__(self):
 		return self.nombre
 
+
 	@staticmethod
 	def ultimos():
 		return Localidad.objects.order_by('-id')[:15]
@@ -19,7 +20,8 @@ class Cuenta(models.Model):
 	email = models.EmailField()
 
 	def __str__(self):
-		return "{0}_{1}_{2}".format(self.nombre, self.localidad, self.email)
+		return "{0}-{1}-{2}".format(self.nombre, self.localidad, self.email)
+
 
 class Movimiento(models.Model):
 	cuenta = models.ForeignKey(Cuenta)

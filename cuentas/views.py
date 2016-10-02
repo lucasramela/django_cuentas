@@ -1,28 +1,30 @@
 import datetime
 from django.http import HttpResponse
 from django.http import Http404
-import datetime
-from django.http import HttpResponse
-from django.http import Http404
 from django.shortcuts import render
 from cuentas.models import Cuenta, Movimiento, Localidad, PerfilEmpleado
 from cuentas.forms import SearchForm, MovimientoForm, LocalidadForm
+from django.contrib.auth.decorators import login_required, permission_required
 
 
 # Create your views here.
 def index(request):
 	return render(request, 'base.html', {})
 
-
+@login_required
 def fecha(request):
 	now = datetime.datetime.now()
 	html = "<html><body> Hoy es %s.</body></html>".format(now)
 	html = "<html><body> El año es {0}.</body></html>".format(now.year)
 	return HttpResponse(html)
 
+@login_required
+@permission_required('cuentas.ver_cuentas')
 def cuentas(request):
 	return render (request, 'cuentas2.html', {'cuentas':Cuenta.objects.all(), 'total': Cuenta.objects.count()})
 
+@login_required
+@permission_required('cuentas.ver_cuentas')
 def cuenta(request, id):
 	try:
 		c = Cuenta.objects.get(pk=id)
@@ -31,6 +33,8 @@ def cuenta(request, id):
 		raise Http404("No existe la cuenta seleccionada")
 	return render (request, 'cuenta2.html',{'cuenta' : c, 'movimientos': m})
 
+@login_required
+@permission_required('cuentas.ver_busqueda')
 def busqueda(request):
 	# preguntamos si se esta usando el metodo post
 	if request.method == 'POST':
@@ -51,6 +55,8 @@ def busqueda(request):
 		form = SearchForm()
 	return render(request, 'busqueda.html', {'form': form})
 
+@login_required
+@permission_required('cuentas.ver_movimientos')
 def movimientos(request):
 	if request.method == 'POST':
 		form = MovimientoForm(request.POST)
@@ -63,6 +69,7 @@ def movimientos(request):
 		form = MovimientoForm()
 		return render(request, 'get_movimientos.html', {'form': form, 'movimientos': Movimiento.ultimos()})
 
+@login_required
 def localidades(request):
 	# 2 - y esto es si doy a guardar
 	if request.method == 'POST':
@@ -78,15 +85,3 @@ def localidades(request):
 		form = LocalidadForm()
 		return render(request, 'get_localidades.html', {'form': form, 'localidades': Localidad.ultimos()})
 
-# def perfiles(request):
-# 	if request.method == 'POST':
-# 		form = PerfilForm(request)
-# 		if form.is_valid:
-
-# 			perfiles = form.save(commit=False)
-# 			perfiles.save()
-
-# 			return render(request, 'perfiles.html', {'form': PerfilEmpleado.objects.all()})
-# 	else:
-# 		form = PerfilForm()
-# 		return render(request, 'perfiles.html', {'form': PerfilEmpleado.objects.all()})
