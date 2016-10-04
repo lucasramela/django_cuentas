@@ -8,7 +8,6 @@ class Localidad(models.Model):
 	def __str__(self):
 		return self.nombre
 
-
 	@staticmethod
 	def ultimos():
 		return Localidad.objects.order_by('-id')[:15]
@@ -21,7 +20,6 @@ class Cuenta(models.Model):
 
 	def __str__(self):
 		return "{0}-{1}-{2}".format(self.nombre, self.localidad, self.email)
-
 
 class Movimiento(models.Model):
 	cuenta = models.ForeignKey(Cuenta)
@@ -52,6 +50,9 @@ class Movimiento(models.Model):
 class PerfilEmpleado(models.Model):
 	fecha_ingreso = models.DateField()
 	sueldo = models.DecimalField(max_digits=20, decimal_places=2,default=20000)
+
+	def __str__(self):
+		return "{0}-{1}".format(self.fecha_ingreso, self.sueldo)
 
 		
 class GerenteDeCuentas(models.Model):

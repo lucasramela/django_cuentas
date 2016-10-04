@@ -23,6 +23,7 @@ def fecha(request):
 def cuentas(request):
 	return render (request, 'cuentas2.html', {'cuentas':Cuenta.objects.all(), 'total': Cuenta.objects.count()})
 
+
 @login_required
 @permission_required('cuentas.ver_cuentas')
 def cuenta(request, id):
@@ -56,7 +57,7 @@ def busqueda(request):
 	return render(request, 'busqueda.html', {'form': form})
 
 @login_required
-@permission_required('cuentas.ver_movimientos')
+@permission_required('cuentas.ver_importe') # tarea
 def movimientos(request):
 	if request.method == 'POST':
 		form = MovimientoForm(request.POST)
@@ -72,16 +73,17 @@ def movimientos(request):
 @login_required
 def localidades(request):
 	# 2 - y esto es si doy a guardar
-	if request.method == 'POST':
-		form = LocalidadForm(request.POST)
-		if form.is_valid():
+	form = LocalidadForm(request.POST)
+	if form.is_valid():
 
-			localidad = form.save(commit=False)
-			localidad.save()
+		localidad = form.save(commit=False)
+		localidad.save()
 
-			return render(request, 'localidades.html', {'localidades': Localidad.ultimos()}) 
+		return render(request, 'localidades.html', {'localidades': Localidad.ultimos()}) 
 	# 1 - esta es la vista
 	else:
 		form = LocalidadForm()
 		return render(request, 'get_localidades.html', {'form': form, 'localidades': Localidad.ultimos()})
+
+
 
